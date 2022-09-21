@@ -1,15 +1,11 @@
-// GitHub: vidallamanda
+/// GitHub: vidallamanda
 // Autora: Amanda da Cunha Vidal
 // Matricula: 202221364
 
 // Extensões abaixa vistas no ebook
 #include <stdio.h>
 #include <string.h>
-
-/* http://linguagemc.com.br/a-biblioteca-math-h/
-Utilizei a biblioteca e função do site, não a lógica
-Funções: sqrt() e pow() */
-#include <math.h>
+#include <stdbool.h>
 
 int main()
 {
@@ -27,55 +23,66 @@ int main()
     printf("Curso: %s\n\n", curso);
 
     // Declaração de variáveis necessárias para a calculadora.
-    int calculadoraAtivada = 1;
-    int operacaoDesejada;
-    int operacaoCorreta;
-    float operando1, operando2;
+    int operacaoCorreta, i;
+    float operando1, operando2, resultadoPotencia, raiz, decremento, resultadoRaiz;
+    bool calculadoraAtiva = true;
+    char operacaoDesejada;
+    char leitor[] = "";
 
-    while (calculadoraAtivada == 1)
+    /* Enquanto o usuário não selecionar uma operação válida, o código
+    dentro desse while será executado */
+    while (calculadoraAtiva == true)
     {
+        operacaoCorreta = 1;
 
-        operacaoCorreta = 0;
-        operacaoDesejada = 0;
+        raiz = 0;
+        decremento = 1;
+        resultadoRaiz = 0;
 
-        /* Enquanto o usuário não selecionar uma operação válida, o código
-        dentro desse while será executado */
-        while (operacaoCorreta == 0)
+        i = 0;
+        resultadoPotencia = 1;
+
+        while (operacaoCorreta == 1)
         {
 
             printf("\n**************** Calculadora ****************\n");
             printf("---------------------------------------------\n");
             printf("Qual operação você deseja realizar?\n\n");
-            printf("1 - Soma\n");
-            printf("2 - Subtração\n");
-            printf("3 - Divisão\n");
-            printf("4 - Multiplicação\n");
-            printf("5 - Raiz quadrada\n");
-            printf("6 - Potência\n\n");
-            printf("Digite o número de uma das operações acima:");
+            printf("(+) Soma\n");
+            printf("(-) Subtração\n");
+            printf("(/) Divisão\n");
+            printf("(*) Multiplicação\n");
+            printf("(r) Raiz quadrada\n");
+            printf("(^) Potência\n\n");
+            printf("Digite o símbolo dessa operação, como está descrito abaixo (sem parênteses):");
 
-            // Salva a opção que usuário informou na variavel operação desejada.
-            scanf("%d", &operacaoDesejada);
+            // Salva a opção informada na variável operação desejada.
+            scanf("%s", &operacaoDesejada);
 
-            // Verifica se a operação é válida = se ela estiver entre 1 e 6.
-            if ((operacaoDesejada >= 1) && (operacaoDesejada <= 6))
+            // Verifica se a operação é válida, se o caracter digitado corresponde a um dos símbolos.
+            switch (operacaoDesejada)
             {
-                printf("\nDigite um número para o primeiro operando:");
+            case 'r':
+                printf("\nDigite um número para o operando/radicando:");
                 scanf("%f", &operando1);
-
-                /* Verifica se a operação é diferente de raiz quadrada, assim é
-                necessário mais um operando */
-                if (operacaoDesejada != 5)
-                {
-                    printf("\nDigite um número para o segundo operando:");
-                    scanf("%f", &operando2);
-                }
-
-                // Garante a saída do laço while.
+                // Garante a saída do while
+                operacaoCorreta = 0;
+                break;
+            case '+':
+            case '-':
+            case '/':
+            case '*':
+            case '^':
+                printf("\nDigite um número para o primeiro operando (parcela/minuendo/dividendo/multiplicando/base):");
+                scanf("%f", &operando1);
+                printf("\nDigite um número para o segundo operando (parcela/subtraendo/divisor/multiplicador/expoente):");
+                scanf("%f", &operando2);
+                // Garante a saída do while
+                operacaoCorreta = 0;
+                break;
+            default:
+                // O laço repete até inserir uma opção válida
                 operacaoCorreta = 1;
-            }
-            else
-            {
                 printf("\n\nOperação inválida: Não digitou uma das operações listadas.\n\n");
             }
         }
@@ -83,43 +90,77 @@ int main()
         // Verifica qual a operação para realizar a conta necessária.
         switch (operacaoDesejada)
         {
-        case 1:
-            printf("\nResultado da soma %.2f", operando1 + operando2);
+        case '+':
+            printf("\nResultado da soma: %.2f", operando1 + operando2);
             break;
-        case 2:
-            printf("\nResultado da subtração %.2f", operando1 - operando2);
+        case '-':
+            printf("\nResultado da subtração: %.2f", operando1 - operando2);
             break;
-        case 3:
+        case '/':
             if (operando2 == 0)
             {
                 printf("Operação inválida: Divisor não pode ser igual 0");
             }
             else
             {
-                printf("\nResultado da divisão %.2f", operando1 / operando2);
+                printf("\nResultado da divisão: %.2f", operando1 / operando2);
             }
             break;
-        case 4:
-            printf("\nResultado da multiplicação %.2f", operando1 * operando2);
+        case '*':
+            printf("\nResultado da multiplicação: %.2f", operando1 * operando2);
             break;
-        case 5:
-            printf("\nResultado da raiz quadrada %.2f", sqrt(operando1));
+        case 'r':
+            // Codigo levemente adaptado.
+            // Site: https://www.clubedohardware.com.br/forums/topic/1500666-c-raiz-quadrada-exata-linguagem-c/
+            // Autor: Eduardo Ozelame
+            // Poderia utilizar a função sqrt() da bibilioteca math.h
+            raiz = operando1;
+            // o número de vezes que o operando puder ser decrementado de um número impar (1,3,5,7...) será o resultado da raiz.
+            while (raiz > 0)
+            {
+                raiz -= decremento;
+                decremento += 2;
+                resultadoRaiz += 1;
+            }
+            if (raiz < 0)
+            {
+                printf("A raiz quadrada não é exata!");
+            }
+            else
+            {
+                printf("A raiz quadrada exata é: %.2f", resultadoRaiz);
+            }
             break;
-        case 6:
-            printf("\nResultado da potência %.2f", pow(operando1, operando2));
+        case '^':
+            // Poderia utilizar a função pow() da bibilioteca math.h
+            // Se o expoente for 0, a potência é 1
+            if (operando2 == 0)
+            {
+                resultadoPotencia = 1;
+            }
+            else
+            {
+                // O operando1 será multiplicado n vezes por ele mesmo, o valor de n é o operando2, conhecido como expoente.
+                for (i = 0; i < operando2; i++)
+                {
+                    resultadoPotencia *= operando1;
+                }
+            }
+            printf("\nResultado da potência: %.2f", resultadoPotencia);
             break;
         }
-
-        /* Se deseja realizar outra operação, o laço while continua sendo
-        verdade, portanto, continua sendo executado */
-        printf("\n\nDeseja realizar outra operação?");
-        printf("\nCaso a resposta seja sim, digite 1, se não, digite qualquer coisa\n");
-        scanf("%d", &calculadoraAtivada);
-
+        /*Se deseja realizar outra operação, o laço while continua sendo verdade, portanto, continua sendo executado */
+        printf("\n\nDeseja realizar uma nova operação válida?");
+        printf("\nDigite 'sim' sem as aspas e mínusculo caso queira, senão, digite qualquer coisa\n");
+        scanf("%s", &leitor);
+        
+        //se leitor for igual a sim, o strcmp retorna 0
+        if (strcmp(leitor, "sim") == 0) {
+            calculadoraAtiva = true;
+        } else {
+            calculadoraAtiva = false;
+        }
     }
-
     printf("\n++++++++++++++ Programa encerrado ++++++++++++++");
-
     return 0;
-    
 }

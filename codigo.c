@@ -1,4 +1,6 @@
-/// GitHub: vidallamanda
+// GitHub: vidallamanda
+// Projeto: Atividade-producao
+// Arquivo: codigo.c
 // Autora: Amanda da Cunha Vidal
 // Matricula: 202221364
 
@@ -54,7 +56,7 @@ int main()
             printf("(*) Multiplicação\n");
             printf("(r) Raiz quadrada\n");
             printf("(^) Potência\n\n");
-            printf("Digite o símbolo dessa operação, como está descrito abaixo (sem parênteses):");
+            printf("Digite o símbolo dessa operação, como está descrito abaixo (sem parênteses): ");
 
             // Salva a opção informada na variável operação desejada.
             scanf("%s", &operacaoDesejada);
@@ -63,7 +65,7 @@ int main()
             switch (operacaoDesejada)
             {
             case 'r':
-                printf("\nDigite um número para o operando/radicando:");
+                printf("\nDigite um número para o operando/radicando: ");
                 scanf("%f", &operando1);
                 // Garante a saída do while
                 operacaoCorreta = 0;
@@ -73,9 +75,9 @@ int main()
             case '/':
             case '*':
             case '^':
-                printf("\nDigite um número para o primeiro operando (parcela/minuendo/dividendo/multiplicando/base):");
+                printf("\nDigite um número para o primeiro operando (parcela/minuendo/dividendo/multiplicando/base): ");
                 scanf("%f", &operando1);
-                printf("\nDigite um número para o segundo operando (parcela/subtraendo/divisor/multiplicador/expoente):");
+                printf("\nDigite um número para o segundo operando (parcela/subtraendo/divisor/multiplicador/expoente): ");
                 scanf("%f", &operando2);
                 // Garante a saída do while
                 operacaoCorreta = 0;
@@ -151,13 +153,15 @@ int main()
         }
         /*Se deseja realizar outra operação, o laço while continua sendo verdade, portanto, continua sendo executado */
         printf("\n\nDeseja realizar uma nova operação válida?");
-        printf("\nDigite 'sim' sem as aspas e mínusculo caso queira, senão, digite qualquer coisa\n");
+        printf("\nDigite 'sim' sem as aspas e mínusculo caso queira, senão, digite qualquer coisa: \n");
         scanf("%s", &leitor);
-        
-        //se leitor for igual a sim, o strcmp retorna 0
-        if (strcmp(leitor, "sim") == 0) {
+        // se leitor for igual a sim, o strcmp retorna 0
+        if (strcmp(leitor, "sim") == 0)
+        {
             calculadoraAtiva = true;
-        } else {
+        }
+        else
+        {
             calculadoraAtiva = false;
         }
     }
